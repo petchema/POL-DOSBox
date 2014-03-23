@@ -260,8 +260,8 @@ disney=$speaker_disney
 [joystick]
 joysticktype=$joystick_joysticktype
 timed=$joystick_timed
-autofire=$joystick_autofine
-swap34=$joystick_swap32
+autofire=$joystick_autofire
+swap34=$joystick_swap34
 buttonwrap=$joystick_buttonwrap
 
 [serial]
