@@ -2,14 +2,27 @@
 
 # Is it a windows or a dos binary ?
 
-windows_app="$1"
-if [ ! -e "$windows_app" ] ; then 
-	# We are in path, it's wine
-	wrapper="wine.real"
-elif [ "$(file "$1" | grep 'DOS executable')" = "" -a "$(file "$1" | grep 'DOS batch')" = "" ]; then
-	wrapper="wine.real"
-else
+if [ "$1" = "--force-dos" ]; then
 	wrapper="dosbox-wrapper"
+	shift
+fi
+
+if [ "$1" = "--force-win" ]; then
+	wrapper="wine.real"
+	shift
+fi
+
+windows_app="$1"
+
+if [ ! -e "$wrapper" ]; then
+	if [ ! -e "$windows_app" ] ; then 
+		# We are in path, it's wine
+		wrapper="wine.real"
+	elif [ "$(file "$1" | grep 'DOS executable')" = "" -a "$(file "$1" | grep 'DOS batch')" = "" ]; then
+		wrapper="wine.real"
+	else
+		wrapper="dosbox-wrapper"
+	fi
 fi
 
 exec "$wrapper" "$@"
