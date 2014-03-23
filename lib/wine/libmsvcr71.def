@@ -71,7 +71,7 @@ EXPORTS
   _CIsqrt=msvcrt._CIsqrt @66
   _CItan=msvcrt._CItan @67
   _CItanh=msvcrt._CItanh @68
-  _CRT_RTC_INIT=msvcr90._CRT_RTC_INIT @69
+  _CRT_RTC_INIT=msvcr100._CRT_RTC_INIT @69
   _CxxThrowException@8=msvcrt._CxxThrowException @70
   _EH_prolog=msvcrt._EH_prolog @71
   _Getdays=msvcrt._Getdays @72
@@ -417,7 +417,7 @@ EXPORTS
   _mbsspn=msvcrt._mbsspn @425
   _mbsspnp=msvcrt._mbsspnp @426
   _mbsstr=msvcrt._mbsstr @427
-  _mbstok=msvcrt._mbstok @428
+  _mbstok=msvcr100._mbstok @428
   _mbstrlen=msvcrt._mbstrlen @429
   _mbsupr=msvcrt._mbsupr @430
   _memccpy=msvcrt._memccpy @431
@@ -635,7 +635,7 @@ EXPORTS
   atan2=msvcrt.atan2 @644
   atexit=msvcrt.atexit @645
   atof=msvcrt.atof @646
-  atoi=msvcrt.atoi @647
+  atoi=msvcr100.atoi @647
   atol=msvcrt.atol @648
   bsearch=msvcrt.bsearch @649
   calloc=msvcrt.calloc @650

@@ -118,3 +118,4 @@ EXPORTS
   SQLDriversW@32 @171
   SQLSetDescFieldW@20 @173
   SQLSetStmtAttrW@16 @176
+  SQLDataSourcesA@32 @257

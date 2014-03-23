@@ -10,6 +10,7 @@ EXPORTS
   D3D10CreateDeviceAndSwapChain@32 @5
   D3D10CreateEffectFromMemory@24 @6
   D3D10CreateStateBlock@12 @8
+  D3D10DisassembleShader@20 @10
   D3D10GetGeometryShaderProfile@4 @11
   D3D10GetInputAndOutputSignatureBlob@12=d3dcompiler_43.D3DGetInputAndOutputSignatureBlob @12
   D3D10GetInputSignatureBlob@12=d3dcompiler_43.D3DGetInputSignatureBlob @13

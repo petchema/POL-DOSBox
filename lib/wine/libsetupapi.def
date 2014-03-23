@@ -17,6 +17,7 @@ EXPORTS
   CM_Get_DevNode_Registry_Property_ExW@28 @73
   CM_Get_Device_IDA@16 @76
   CM_Get_Device_IDW@16 @77
+  CM_Get_Device_ID_ExA@20 @78
   CM_Get_Device_ID_ExW@20 @79
   CM_Get_Device_ID_ListA@16 @80
   CM_Get_Device_ID_ListW@16 @81
@@ -30,6 +31,8 @@ EXPORTS
   CM_Locate_DevNodeW@12 @134
   CM_Locate_DevNode_ExA@16 @135
   CM_Locate_DevNode_ExW@16 @136
+  CM_Reenumerate_DevNode@8 @159
+  CM_Reenumerate_DevNode_Ex@12 @160
   CM_Set_Class_Registry_PropertyA@24 @178
   CM_Set_Class_Registry_PropertyW@24 @179
   CaptureAndConvertAnsiArg@8 @201
@@ -55,6 +58,8 @@ EXPORTS
   SetupAddInstallSectionToDiskSpaceListA@24 @244
   SetupAddToDiskSpaceListA@28 @248
   SetupAddToDiskSpaceListW@28 @249
+  SetupAddToSourceListA@8 @250
+  SetupAddToSourceListW@8 @251
   SetupCloseFileQueue@4 @255
   SetupCloseInfFile@4 @256
   SetupCloseLog@0 @257
@@ -122,6 +127,7 @@ EXPORTS
   SetupDiGetDeviceInfoListDetailA@8 @335
   SetupDiGetDeviceInfoListDetailW@8 @336
   SetupDiGetDeviceInstallParamsA@12 @337
+  SetupDiGetDeviceInstallParamsW@12 @338
   SetupDiGetDeviceInstanceIdA@20 @339
   SetupDiGetDeviceInstanceIdW@20 @340
   SetupDiGetDeviceInterfaceDetailA@24 @342
@@ -144,6 +150,7 @@ EXPORTS
   SetupDiRegisterDeviceInfo@24 @380
   SetupDiRemoveDevice@8 @381
   SetupDiSetClassInstallParamsA@16 @385
+  SetupDiSetDeviceInstallParamsA@12 @387
   SetupDiSetDeviceRegistryPropertyA@20 @389
   SetupDiSetDeviceRegistryPropertyW@20 @390
   SetupDiSetSelectedDevice@8 @393

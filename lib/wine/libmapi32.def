@@ -78,6 +78,8 @@ EXPORTS
   FBadRow@4@4=FBadRow@4 @180
   FBadProp@4@4=FBadProp@4 @181
   FBadColumnSet@4@4=FBadColumnSet@4 @182
+  WrapCompressedRTFStream@12@12=WrapCompressedRTFStream@12 @185
+  WrapCompressedRTFStream@12 @186
   FBadEntryList@4@4=FBadEntryList@4 @190
   CbOfEncoded@4@4=CbOfEncoded@4 @207
   MAPISendDocuments@20 @208
@@ -94,3 +96,4 @@ EXPORTS
   cmc_query_configuration@16 @235
   FGetComponentPath@20 @254
   FGetComponentPath@20@20=FGetComponentPath@20 @255
+  MAPISendMailW@20 @256

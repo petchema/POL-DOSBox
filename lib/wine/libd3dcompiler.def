@@ -6,6 +6,7 @@ EXPORTS
   D3DAssemble@32 @1
   D3DCompile@44 @3
   D3DCreateBlob@8 @5
+  D3DDisassemble@20 @8
   D3DGetBlobPart@20 @9
   D3DGetDebugInfo@12 @10
   D3DGetInputAndOutputSignatureBlob@12 @11

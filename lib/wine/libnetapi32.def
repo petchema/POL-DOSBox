@@ -18,6 +18,7 @@ EXPORTS
   NetApiBufferReallocate@12 @68
   NetApiBufferSize@8 @69
   NetFileEnum@36 @91
+  NetGetAnyDCName@12 @93
   NetGetDCName@12 @94
   NetGetJoinInformation@12 @96
   NetGroupEnum@28 @101
@@ -34,6 +35,7 @@ EXPORTS
   NetLocalGroupSetInfo@20 @115
   NetLocalGroupSetMembers@20 @116
   NetQueryDisplayInformation@28 @122
+  NetScheduleJobAdd@12 @169
   NetScheduleJobEnum@24 @171
   NetServerDiskEnum@28 @175
   NetServerEnum@36 @176

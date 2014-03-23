@@ -194,6 +194,10 @@ EXPORTS
   GdipDrawString@28 @190
   GdipEmfToWmfBits@20 @191
   GdipEndContainer@8 @192
+  GdipEnumerateMetafileDestPoint@24 @193
+  GdipEnumerateMetafileDestPointI@24 @194
+  GdipEnumerateMetafileDestRect@24 @197
+  GdipEnumerateMetafileDestRectI@24 @198
   GdipEnumerateMetafileSrcRectDestPoints@36 @201
   GdipFillClosedCurve2@24 @205
   GdipFillClosedCurve2I@24 @206
@@ -303,6 +307,7 @@ EXPORTS
   GdipGetPathGradientCenterPointI@8 @316
   GdipGetPathGradientFocusScales@12 @317
   GdipGetPathGradientGammaCorrection@8 @318
+  GdipGetPathGradientPath@8 @319
   GdipGetPathGradientPointCount@8 @320
   GdipGetPathGradientPresetBlend@16 @321
   GdipGetPathGradientPresetBlendCount@8 @322
@@ -439,8 +444,11 @@ EXPORTS
   GdipReleaseDC@8 @455
   GdipRemovePropertyItem@8 @456
   GdipResetClip@4 @457
+  GdipResetImageAttributes@8 @458
   GdipResetLineTransform@4 @459
+  GdipResetPageTransform@4 @460
   GdipResetPath@4 @461
+  GdipResetPathGradientTransform@4 @462
   GdipResetPenTransform@4 @463
   GdipResetTextureTransform@4 @464
   GdipResetWorldTransform@4 @465
@@ -452,6 +460,7 @@ EXPORTS
   GdipRotatePenTransform@12 @471
   GdipRotateTextureTransform@12 @472
   GdipRotateWorldTransform@12 @473
+  GdipSaveAdd@8 @474
   GdipSaveGraphics@8 @476
   GdipSaveImageToFile@16 @477
   GdipSaveImageToStream@16 @478

@@ -209,6 +209,7 @@ EXPORTS
   MsiAdvertiseProductExW@24 @228
   MsiOpenPackageExA@12 @231
   MsiOpenPackageExW@12 @232
+  Migrate10CachedPackagesW@16 @236
   MsiApplyMultiplePatchesA@12 @239
   MsiApplyMultiplePatchesW@12 @240
   MsiGetPatchInfoExA@28 @243
@@ -219,6 +220,8 @@ EXPORTS
   MsiGetProductInfoExW@24 @248
   MsiQueryComponentStateA@20 @249
   MsiQueryComponentStateW@20 @250
+  MsiQueryFeatureStateExA@20 @251
+  MsiQueryFeatureStateExW@20 @252
   MsiDeterminePatchSequenceA@20 @253
   MsiDeterminePatchSequenceW@20 @254
   MsiSourceListAddSourceExA@24 @255
@@ -247,6 +250,8 @@ EXPORTS
   MsiBeginTransactionA@16 @284
   MsiBeginTransactionW@16 @285
   MsiEndTransaction@4 @286
+  MsiEnumComponentsExA@28 @289
+  MsiEnumComponentsExW@28 @290
   DllCanUnloadNow@0 @296 PRIVATE
   DllGetClassObject@12 @297 PRIVATE
   DllRegisterServer@0 @298 PRIVATE

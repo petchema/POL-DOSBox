@@ -23,6 +23,7 @@ EXPORTS
   CoInternetQueryInfo@28 @23
   CoInternetSetFeatureEnabled@12 @24
   CompareSecurityIds@20 @25
+  CopyBindInfo@8 @26
   CopyStgMedium@8 @27
   CreateAsyncBindCtx@16 @28
   CreateAsyncBindCtxEx@24 @29
