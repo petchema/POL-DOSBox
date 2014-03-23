@@ -135,8 +135,8 @@ mixer_blocksize="2048"
 mixer_prebuffer="10"
 
 midi_mpu401="intelligent"
-midi_device="default"
-midi_config=""
+midi_mididevice="default"
+midi_midiconfig=""
 
 sblaster_sbtype="sb16"
 sblaster_sbbase="220"
@@ -162,11 +162,11 @@ speaker_tandy="auto"
 speaker_tandyrate="22050"
 speaker_disney="true"
 
-joystic_joysticktype="auto"
-joystic_timed="true"
-joystic_autofire="false"
-joystic_swap34="false"
-joystic_buttonwrap="true"
+joystick_joysticktype="auto"
+joystick_timed="true"
+joystick_autofire="false"
+joystick_swap34="false"
+joystick_buttonwrap="true"
 
 serial_serial1="dummy"
 serial_serial2="dummy"
@@ -225,8 +225,8 @@ prebuffer=$mixer_prebuffer
 
 [midi]
 mpu401=$midi_mpu401
-device=$midi_device
-config=$midi_config
+mididevice=$midi_mididevice
+midiconfig=$midi_midiconfig
 
 [sblaster]
 sbtype=$sblaster_sbtype
@@ -256,11 +256,11 @@ tandyrate=$speaker_tandyrate
 disney=$speaker_disney
 
 [joystick]
-joysticktype=$joystic_joystictype
-timed=$joystic_timed
-autofire=$joystic_autofine
-swap34=$joystic_swap32
-buttonwrap=$joystic_buttonwrap
+joysticktype=$joystick_joysticktype
+timed=$joystick_timed
+autofire=$joystick_autofine
+swap34=$joystick_swap32
+buttonwrap=$joystick_buttonwrap
 
 [serial]
 serial1=$serial_serial1
