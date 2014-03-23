@@ -72,7 +72,7 @@ for drive in $drivelist; do
 	if [ -e "$WINEPREFIX/dosdevices/$drive::" ]; then
 		if [ ! "$manual_mount" = "true" ]; then
 			# Consider that it is a cdrom
-			echo "MOUNT $drive $realname -t cdrom -usecd 0 -ioctl" >> autoexec.bat
+			echo "MOUNT $drive \"$realname\" -t cdrom -usecd 0 -ioctl" >> autoexec.bat
 		fi
 	else
 		echo "MOUNT $drive $realname" >> autoexec.bat
