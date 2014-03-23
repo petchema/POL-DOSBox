@@ -106,7 +106,7 @@ if [ ! "$sdl_fullresolution" ]; then
 	POL_LoadVar_ScreenResolution
 	sdl_fullresolution="${ScreenWidth}x${ScreenHeight}"
 fi
-sdl_windowsresolution="original"
+sdl_windowresolution="original"
 sdl_output="opengl"
 sdl_autolock="true"
 sdl_sensitivity="100"
@@ -191,7 +191,7 @@ cat << EOF_CONF > PlayOnLinux_DOSBox.cfg
 fullscreen=$sdl_fullscreen
 fulldouble=$sdl_fulldouble
 fullresolution=$sdl_fullresolution
-windowresolution=$sdl_windowsresolution
+windowresolution=$sdl_windowresolution
 output=$sdl_output
 autolock=$sdl_autolock
 sensitivity=$sdl_sensitivity
