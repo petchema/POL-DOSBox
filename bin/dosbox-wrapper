@@ -1,0 +1,89 @@
+#!/bin/bash
+
+### DOSBOX Wrapper for PlayOnLinux and PlayOnMac
+
+echo "Dosbox front-end for $APPLICATION_TITLE"
+echo "[$APPLICATION_TITLE] Working in $WINEPREFIX"
+
+rwinepath()
+{
+	# Stron minimum requirement for winepath
+	"$winedir/wine.real" winepath "$@" 2> /dev/null
+}
+
+
+ICOMEFROM="$PWD"
+winedir="$(dirname $0)"
+cd "$winedir"
+winedir="$PWD"
+
+if [ "$1" = "wineprefixcreate" ]
+then
+	mkdir -p "$WINEPREFIX/drive_c"
+	exit
+fi 
+if [ "$1" = "wineboot" ] || [ "$1" = "cmd" ]
+then
+	mkdir -p "$WINEPREFIX/drive_c"
+	exit
+fi
+cd "$ICOMEFROM"
+current_rep_unix="$(dirname "$1")"
+cd "$current_rep_unix"
+current_rep_unix="$PWD"
+
+source "$PLAYONLINUX/lib/sources"
+
+
+current_rep_win_first="$(rwinepath -w "$current_rep_unix")"
+realpath="$(rwinepath -w "$1")"
+
+realpath="${realpath/Z:/W:}"
+current_rep_win="${current_rep_win_first/Z:/W:}"
+letter=${current_rep_win:0:1}
+echo "[$APPLICATION_TITLE] Detecting program to run: $current_rep_win"
+
+rm -rf "$POL_USER_ROOT/tmp/dostmp"
+
+# Detecting drives
+cd "$WINEPREFIX/dosdevices"
+drivelist="$(ls -1 | grep -v '::' | grep -v 'z:' | tr -d ':')" 
+
+mkdir -p "$POL_USER_ROOT/tmp/dostmp"	
+cp "$winedir/../share/bin/"* "$POL_USER_ROOT/tmp/dostmp"
+cd "$POL_USER_ROOT/tmp/dostmp"
+
+echo "@echo off" > autoexec.bat
+for drive in $drivelist; do
+	realname="$(readlink $WINEPREFIX/dosdevices/$drive:)"
+	if [ ! "${realname::1}" = "/" ]; then
+		realname="$WINEPREFIX/dosdevices/$realname"
+	fi
+	if [ -e "$WINEPREFIX/dosdevices/$drive::" ]; then
+		# Consider that it is a cdrom
+		echo "MOUNT $drive $realname -t cdrom -usecd 0 -ioctl" >> autoexec.bat
+	else
+		echo "MOUNT $drive $realname" >> autoexec.bat
+	fi
+done
+echo "PATH=Z:\;Y:" >> autoexec.bat
+echo "cls" >> autoexec.bat
+echo "echo Dosbox front-end for $APPLICATION_TITLE" >> autoexec.bat
+echo "echo." >> autoexec.bat
+if [ -e "$WINEPREFIX/drive_c/autoexec.bat" ]; then
+	echo "echo [$APPLICATION_TITLE] Running autoexec.bat" >> autoexec.bat
+	cat $WINEPREFIX/drive_c/autoexec.bat >> autoexec.bat
+fi
+echo "$letter:" >> autoexec.bat
+echo "echo [$APPLICATION_TITLE] Switching directory : $(python $winedir/../share/shortize.py "$current_rep_win")" >> autoexec.bat
+echo "cd $(python $winedir/../share/shortize.py "$current_rep_win")" >> autoexec.bat
+echo "echo [$APPLICATION_TITLE] Running : $(basename "$1")" >> autoexec.bat
+
+echo "$(basename "$(python $winedir/../share/shortize.py "$(basename $1)")")" >> autoexec.bat
+
+if [ "$WINEDEBUG" = "-all" ]; then	
+echo "exit" >> autoexec.bat
+fi
+
+cd ..
+DOSBox -conf "$winedir/../share/fullscreen.conf"
