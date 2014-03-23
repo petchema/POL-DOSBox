@@ -32,6 +32,7 @@ EXPORTS
   I_RpcGetBuffer@4 @48
   I_RpcGetCurrentCallHandle@0 @50
   I_RpcMapWin32Status@4 @54
+  I_RpcNegotiateTransferSyntax@4 @55
   I_RpcReceive@4 @65
   I_RpcSend@4 @67
   I_RpcSendReceive@4 @68
@@ -239,6 +240,10 @@ EXPORTS
   RpcEpRegisterW@16 @373
   RpcEpResolveBinding@8 @374
   RpcEpUnregister@12 @375
+  RpcErrorEndEnumeration@4 @378
+  RpcErrorGetNextRecord@12 @379
+  RpcErrorLoadErrorInfo@12 @380
+  RpcErrorSaveErrorInfo@12 @383
   RpcErrorStartEnumeration@4 @384
   RpcGetAsyncCallStatus@4=RpcAsyncGetCallStatus@4 @386
   RpcImpersonateClient@4 @389
@@ -266,6 +271,8 @@ EXPORTS
   RpcRevertToSelf@0 @424
   RpcRevertToSelfEx@4 @425
   RpcServerInqBindings@4 @426
+  RpcServerInqDefaultPrincNameA@8 @429
+  RpcServerInqDefaultPrincNameW@8 @430
   RpcServerListen@12 @432
   RpcServerRegisterAuthInfoA@16 @433
   RpcServerRegisterAuthInfoW@16 @434

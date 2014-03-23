@@ -4,6 +4,7 @@ LIBRARY credui.dll
 
 EXPORTS
   CredUIConfirmCredentialsW@8 @4
+  CredUIInitControls@0 @5
   CredUIParseUserNameW@20 @7
   CredUIPromptForCredentialsW@40 @9
   CredUIReadSSOCredA@8 @10

@@ -13,6 +13,7 @@ EXPORTS
   D3DXCheckTextureRequirements@28 @8
   D3DXCheckVersion@8 @9
   D3DXCheckVolumeTextureRequirements@32 @10
+  D3DXCleanMesh@24 @11
   D3DXColorAdjustContrast@12 @12
   D3DXColorAdjustSaturation@12 @13
   D3DXCompileShader@40 @14
@@ -25,7 +26,12 @@ EXPORTS
   D3DXCreateBox@24 @34
   D3DXCreateBuffer@8 @35
   D3DXCreateCubeTexture@28 @37
+  D3DXCreateCubeTextureFromFileA@12 @38
+  D3DXCreateCubeTextureFromFileExA@52 @39
+  D3DXCreateCubeTextureFromFileExW@52 @40
+  D3DXCreateCubeTextureFromFileInMemory@16 @41
   D3DXCreateCubeTextureFromFileInMemoryEx@56 @42
+  D3DXCreateCubeTextureFromFileW@12 @43
   D3DXCreateCylinder@32 @48
   D3DXCreateEffect@36 @49
   D3DXCreateEffectCompiler@28 @50
@@ -51,6 +57,8 @@ EXPORTS
   D3DXCreateMatrixStack@8 @73
   D3DXCreateMesh@24 @74
   D3DXCreateMeshFVF@24 @75
+  D3DXCreateRenderToEnvMap@28 @84
+  D3DXCreateRenderToSurface@28 @85
   D3DXCreateSkinInfo@16 @87
   D3DXCreateSkinInfoFVF@16 @89
   D3DXCreateSphere@24 @90
@@ -70,8 +78,16 @@ EXPORTS
   D3DXCreateTextureFromResourceExW@60 @104
   D3DXCreateTextureFromResourceW@16 @105
   D3DXCreateVolumeTexture@36 @109
+  D3DXCreateVolumeTextureFromFileA@12 @110
+  D3DXCreateVolumeTextureFromFileExA@60 @111
+  D3DXCreateVolumeTextureFromFileExW@60 @112
+  D3DXCreateVolumeTextureFromFileInMemory@16 @113
+  D3DXCreateVolumeTextureFromFileInMemoryEx@64 @114
+  D3DXCreateVolumeTextureFromFileW@12 @115
   D3DXDebugMute@4 @120
   D3DXDeclaratorFromFVF@8 @121
+  D3DXDisassembleEffect@12 @122
+  D3DXFileCreate@4 @124
   D3DXFillCubeTexture@12 @125
   D3DXFillTexture@12 @127
   D3DXFillVolumeTexture@12 @129
@@ -106,6 +122,7 @@ EXPORTS
   D3DXLoadMeshHierarchyFromXA@28 @176
   D3DXLoadMeshHierarchyFromXInMemory@32 @177
   D3DXLoadMeshHierarchyFromXW@28 @178
+  D3DXLoadSkinMeshFromXof@36 @184
   D3DXLoadSurfaceFromFileA@32 @185
   D3DXLoadSurfaceFromFileInMemory@36 @186
   D3DXLoadSurfaceFromFileW@32 @187
@@ -113,7 +130,11 @@ EXPORTS
   D3DXLoadSurfaceFromResourceA@36 @189
   D3DXLoadSurfaceFromResourceW@36 @190
   D3DXLoadSurfaceFromSurface@32 @191
+  D3DXLoadVolumeFromFileA@32 @192
+  D3DXLoadVolumeFromFileInMemory@36 @193
+  D3DXLoadVolumeFromFileW@32 @194
   D3DXLoadVolumeFromMemory@44 @195
+  D3DXLoadVolumeFromVolume@32 @198
   D3DXMatrixAffineTransformation@20 @199
   D3DXMatrixAffineTransformation2D@20 @200
   D3DXMatrixDecompose@16 @201
@@ -146,6 +167,7 @@ EXPORTS
   D3DXMatrixTransformation2D@28 @228
   D3DXMatrixTranslation@16 @229
   D3DXMatrixTranspose@8 @230
+  D3DXOptimizeFaces@20 @231
   D3DXPlaneFromPointNormal@12 @233
   D3DXPlaneFromPoints@16 @234
   D3DXPlaneIntersectLine@16 @235
@@ -168,10 +190,27 @@ EXPORTS
   D3DXQuaternionRotationYawPitchRoll@16 @252
   D3DXQuaternionSlerp@16 @253
   D3DXQuaternionSquad@24 @254
+  D3DXQuaternionSquadSetup@28 @255
   D3DXQuaternionToAxisAngle@12 @256
   D3DXSaveSurfaceToFileA@20 @266
+  D3DXSaveSurfaceToFileInMemory@20 @267
   D3DXSaveSurfaceToFileW@20 @268
+  D3DXSaveTextureToFileA@16 @269
+  D3DXSaveTextureToFileInMemory@16 @270
+  D3DXSaveTextureToFileW@16 @271
   D3DXSHAdd@16 @275
+  D3DXSHDot@12 @276
+  D3DXSHEvalConeLight@36 @277
+  D3DXSHEvalDirection@12 @278
+  D3DXSHEvalDirectionalLight@32 @279
+  D3DXSHEvalHemisphereLight@52 @280
+  D3DXSHEvalSphericalLight@36 @281
+  D3DXSHMultiply2@12 @282
+  D3DXSHMultiply3@12 @283
+  D3DXSHMultiply4@12 @284
+  D3DXSHRotate@16 @290
+  D3DXSHRotateZ@16 @291
+  D3DXSHScale@16 @292
   D3DXSphereBoundProbe@16 @294
   D3DXValidMesh@12 @303
   D3DXVec2BaryCentric@24 @305

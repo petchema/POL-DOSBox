@@ -24,6 +24,7 @@ EXPORTS
   ExAllocatePoolWithQuota@8 @120
   ExAllocatePoolWithQuotaTag@12 @121
   ExAllocatePoolWithTag@12 @122
+  ExCreateCallback@16 @125
   ExFreePool@4 @134
   ExFreePoolWithTag@8 @135
   ExInitializeNPagedLookasideList@28 @142
@@ -33,6 +34,8 @@ EXPORTS
   ExLocalTimeToSystemTime@8=ntdll.RtlLocalTimeToSystemTime @160
   ExSystemTimeToLocalTime@8=ntdll.RtlSystemTimeToLocalTime @176
   FsRtlRegisterUncProvider@12 @274
+  IoAcquireCancelSpinLock@4 @306
+  IoAcquireRemoveLockEx@20 @307
   IoAllocateDriverObjectExtension@16 @312
   IoAllocateErrorLogEntry@8 @313
   IoAllocateIrp@8 @314
@@ -50,6 +53,7 @@ EXPORTS
   IoDeleteDriver@4 @357
   IoDeleteSymbolicLink@4 @358
   IoFreeIrp@4 @373
+  IoFreeMdl@4 @374
   IoGetConfigurationInformation@0 @380
   IoGetCurrentProcess@0 @381
   IoGetDeviceInterfaces@16 @384
@@ -65,8 +69,10 @@ EXPORTS
   IoRegisterDriverReinitialization@12 @429
   IoRegisterFileSystem@4 @430
   IoRegisterShutdownNotification@4 @434
+  IoReleaseCancelSpinLock@4 @435
   IoReportResourceUsage@36 @443
   IoSetThreadHardErrorMode@4 @459
+  IoStartNextPacket@8 @461
   IoStartTimer@4 @464
   IoUnregisterFileSystem@4 @470
   IoUnregisterShutdownNotification@4 @473
@@ -107,9 +113,12 @@ EXPORTS
   MmGetSystemRoutineAddress@4 @678
   MmIsAddressValid@4 @682
   MmMapIoSpace@16 @691
+  MmMapLockedPagesSpecifyCache@24 @693
   MmPageEntireDriver@4 @703
+  MmProbeAndLockPages@12 @705
   MmQuerySystemSize@0 @709
   MmResetDriverPaging@4 @711
+  MmUnlockPages@4 @720
   MmUnmapIoSpace@8 @721
   NlsAnsiCodePage=ntdll.NlsAnsiCodePage @730 DATA
   NlsMbCodePageTag=ntdll.NlsMbCodePageTag @732 DATA
@@ -174,6 +183,7 @@ EXPORTS
   PsGetCurrentThread@0=KeGetCurrentThread@0 @855
   PsGetCurrentThreadId@0 @856
   PsGetVersion@16 @887
+  PsImpersonateClient@20 @888
   PsLookupProcessByProcessId@8 @895
   PsSetCreateProcessNotifyRoutine@8 @910
   PsSetCreateThreadNotifyRoutine@4 @911

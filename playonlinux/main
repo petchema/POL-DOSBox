@@ -6,6 +6,6 @@ fi
 
 source "$PLAYONLINUX/lib/sources" 
 
-cp -a $SCRIPT_DIRECTORY/../wineversion/1.4-dos_support_0.6 $REPERTOIRE/wine/linux-x86/1.4-dos_support_0.6
+cp -a $SCRIPT_DIRECTORY/../wineversion/1.6.2-dos_support_0.6 $REPERTOIRE/wine/linux-x86/1.6.2-dos_support_0.6
 
 exit

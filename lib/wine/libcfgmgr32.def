@@ -15,6 +15,7 @@ EXPORTS
   CM_Get_DevNode_Registry_Property_ExW@28=setupapi.CM_Get_DevNode_Registry_Property_ExW @62
   CM_Get_Device_IDA@16=setupapi.CM_Get_Device_IDA @65
   CM_Get_Device_IDW@16=setupapi.CM_Get_Device_IDW @66
+  CM_Get_Device_ID_ExA@20=setupapi.CM_Get_Device_ID_ExA @67
   CM_Get_Device_ID_ExW@20=setupapi.CM_Get_Device_ID_ExW @68
   CM_Get_Device_ID_ListA@16=setupapi.CM_Get_Device_ID_ListA @69
   CM_Get_Device_ID_ListW@16=setupapi.CM_Get_Device_ID_ListW @70
@@ -28,6 +29,8 @@ EXPORTS
   CM_Locate_DevNodeW@12=setupapi.CM_Locate_DevNodeW @123
   CM_Locate_DevNode_ExA@16=setupapi.CM_Locate_DevNode_ExA @124
   CM_Locate_DevNode_ExW@16=setupapi.CM_Locate_DevNode_ExW @125
+  CM_Reenumerate_DevNode@8=setupapi.CM_Reenumerate_DevNode @144
+  CM_Reenumerate_DevNode_Ex@12=setupapi.CM_Reenumerate_DevNode_Ex @145
   CM_Set_Class_Registry_PropertyA@24=setupapi.CM_Set_Class_Registry_PropertyA @161
   CM_Set_Class_Registry_PropertyW@24=setupapi.CM_Set_Class_Registry_PropertyW @162
   CMP_WaitNoPendingInstallEvents@4=setupapi.CMP_WaitNoPendingInstallEvents @184

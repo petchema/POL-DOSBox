@@ -1,9 +1,10 @@
 #!/usr/bin/perl -w
+use utf8;
 use strict;
 
-# Copyright 2000-2004 Francois Gouget for CodeWeavers
+# Copyright 2000-2004 François Gouget for CodeWeavers
 # Copyright 2004 Dimitrie O. Paun
-# Copyright 2009-2011 André Hentschel
+# Copyright 2009-2012 André Hentschel
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -20,7 +21,7 @@ use strict;
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 #
 
-my $version="0.8.1";
+my $version="0.8.4";
 
 use Cwd;
 use File::Basename;
@@ -276,6 +277,10 @@ my $TF_NOMSVCRT=32;
 ##
 # This target has a def file (only use it with TT_DLL)
 my $TF_HASDEF=64;
+
+##
+# This target has C++ files named *.cxx (instead of *.cpp)
+my $TF_HASCXX=128;
 
 ##
 # Initialize a target:
@@ -558,15 +563,7 @@ sub source_scan_project_file($$$)
         $path.="/";
     }
 
-    if (defined $opt_single_target or $is_sub_project == 0) {
-        # Either there is a single target and thus a single project,
-        # or we are a single project-file for which a project
-        # already exists
-        $project=$parent_project;
-    } else {
-        $project=[];
-        project_init($project, $path, \@global_settings);
-    }
+    $project=$parent_project;
     my $project_settings=@$project[$P_SETTINGS];
 
     if ($filename =~ /.dsp$/i) {
@@ -686,6 +683,11 @@ sub source_scan_project_file($$$)
                         # Additional Include Directories
                         $sfilet=$1;
                         $sfilet=~s/\\/\//g;
+                        my @compinc=split /\/+/, $sfilet;
+                        my $realinc=search_from($path, \@compinc);
+                        if (defined $realinc) {
+                            $sfilet=$realinc;
+                        }
                         if ($sfilet=~/^\w:/) {
                             print STDERR "warning: Can't fix path $sfilet\n"
                         } else {
@@ -805,13 +807,16 @@ sub source_scan_project_file($$$)
                 if (!defined $sfilet) { next; }
                 if ($sfilet =~ /\.c$/i and $sfilet !~ /\.(dbg|spec)\.c$/) {
                     push @sources_c,$sfilet;
-                } elsif ($sfilet =~ /\.(cpp|cxx)$/i) {
+                } elsif ($sfilet =~ /\.cpp$/i) {
                     if ($sfilet =~ /^stdafx.cpp$/i && !(@$project_settings[$T_FLAGS] & $TF_NOMFC)) {
                         push @sources_misc,$sfilet;
                         @$project_settings[$T_FLAGS]|=$TF_MFC;
                     } else {
                         push @sources_cxx,$sfilet;
                     }
+                } elsif ($sfilet =~ /\.cxx$/i) {
+                    @$project_settings[$T_FLAGS]|=$TF_HASCXX;
+                    push @sources_cxx,$sfilet;
                 } elsif ($sfilet =~ /\.rc$/i) {
                     push @sources_rc,$sfilet;
                 } elsif ($sfilet =~ /\.def$/i) {
@@ -894,15 +899,23 @@ sub source_scan_project_file($$$)
                         $sfilet=~s/\\\\/\\/g; #remove double backslash
                         $sfilet=~s/^\.\\//; #remove starting 'this directory'
                         $sfilet=~s/\\/\//g; #make slashes out of backslashes
+                        my @compsrc=split(/\/+/, $sfilet);
+                        my $realsrc=search_from($path, \@compsrc);
+                        if (defined $realsrc) {
+                            $sfilet=$realsrc;
+                        }
                         if ($sfilet =~ /\.c$/i and $sfilet !~ /\.(dbg|spec)\.c$/) {
                             push @sources_c,$sfilet;
-                        } elsif ($sfilet =~ /\.(cpp|cxx)$/i) {
+                        } elsif ($sfilet =~ /\.cpp$/i) {
                             if ($sfilet =~ /^stdafx.cpp$/i && !(@$project_settings[$T_FLAGS] & $TF_NOMFC)) {
                                 push @sources_misc,$sfilet;
                                 @$project_settings[$T_FLAGS]|=$TF_MFC;
                             } else {
                                 push @sources_cxx,$sfilet;
                             }
+                        } elsif ($sfilet =~ /\.cxx$/i) {
+                            @$project_settings[$T_FLAGS]|=$TF_HASCXX;
+                            push @sources_cxx,$sfilet;
                         } elsif ($sfilet =~ /\.rc$/i) {
                             push @sources_rc,$sfilet;
                         } elsif ($sfilet =~ /\.def$/i) {
@@ -956,8 +969,15 @@ sub source_scan_project_file($$$)
                     if ($vc_compiler_tool->getName eq "AdditionalIncludeDirectories") {
                         $configt=$vc_compiler_tool->getValue;
                         $configt=~s/\\/\//g;
-                        $configt=~s/;/ -I/g;
-                        push @{@$project_settings[$T_INCLUDE_PATH]},"-I".$configt;
+                        my @addincl = split(/\s*;\s*/, $configt);
+                        foreach $configt (@addincl) {
+                            my @compinc=split(/\/+/, $configt);
+                            my $realinc=search_from($path, \@compinc);
+                            if (defined $realinc) {
+                                $configt=$realinc;
+                            }
+                            push @{@$project_settings[$T_INCLUDE_PATH]},"-I".$configt;
+                        }
                     }
                 }
             }
@@ -977,6 +997,9 @@ sub source_scan_project_file($$$)
         push @{@$project_settings[$T_CEXTRA]},$prj_target_cflags;
         push @{@$project_settings[$T_CXXEXTRA]},$prj_target_cflags;
         push @{@$project_settings[$T_DEFINES]},$prj_target_defines;
+    } else {
+        print STDERR "File format not supported for file: $filename\n";
+        return;
     }
 
     # Add this project to the project list, except for
@@ -1115,7 +1138,6 @@ sub source_scan_project_file($$$)
 
     if ((@$project_settings[$T_FLAGS] & $TF_NOMSVCRT) == 0) {
         push @{@$project_settings[$T_CEXTRA]},"-mno-cygwin";
-        push @{@$project_settings[$T_CXXEXTRA]},"-mno-cygwin";
         if ($opt_arch != $OPT_ARCH_DEFAULT) {
             push @{@$project_settings[$T_CEXTRA]},"-m$opt_arch";
             push @{@$project_settings[$T_CXXEXTRA]},"-m$opt_arch";
@@ -1315,13 +1337,16 @@ sub source_scan_directory($$$$)
 	$targets{$dentry}=1;
       } elsif ($dentry =~ /\.c$/i and $dentry !~ /\.(dbg|spec)\.c$/) {
 	push @sources_c,"$dentry";
-      } elsif ($dentry =~ /\.(cpp|cxx)$/i) {
+      } elsif ($dentry =~ /\.cpp$/i) {
 	if ($dentry =~ /^stdafx.cpp$/i && !(@$project_settings[$T_FLAGS] & $TF_NOMFC)) {
 	  push @sources_misc,"$dentry";
 	  @$project_settings[$T_FLAGS]|=$TF_MFC;
 	} else {
 	  push @sources_cxx,"$dentry";
 	}
+      } elsif ($dentry =~ /\.cxx$/i) {
+          @$project_settings[$T_FLAGS]|=$TF_HASCXX;
+          push @sources_cxx,"$dentry";
       } elsif ($dentry =~ /\.rc$/i) {
 	push @sources_rc,"$dentry";
       } elsif ($dentry =~ /\.def$/i) {
@@ -1672,7 +1697,6 @@ sub source_scan_directory($$$$)
 
   if ((@$project_settings[$T_FLAGS] & $TF_NOMSVCRT) == 0) {
     push @{@$project_settings[$T_CEXTRA]},"-mno-cygwin";
-    push @{@$project_settings[$T_CXXEXTRA]},"-mno-cygwin";
       if ($opt_arch != $OPT_ARCH_DEFAULT) {
         push @{@$project_settings[$T_CEXTRA]},"-m$opt_arch";
         push @{@$project_settings[$T_CXXEXTRA]},"-m$opt_arch";
@@ -1855,7 +1879,6 @@ sub search_from($$)
   my $path=$_[1];
   my $real_path="";
 
-  $dirname =~ s/(\.\/)+//;
   if ($dirname eq "" or $dirname eq "." or $dirname eq "./") {
     $dirname=cwd;
   } elsif ($dirname !~ m+^/+) {
@@ -2093,6 +2116,11 @@ sub fix_file($$$)
       print FILEO "$1$2$real_include_name$4$'";
       $modified|=($real_include_name ne $3);
 
+    } elsif (/^(\s*)\#\s*pragma\s+comment\s*\(\s*lib\s*,\s*\"(\w+)\.lib\"\s*\)/) {
+      my $pragma_indent=$1;
+      my $pragma_lib=$2;
+      push @{@$target[$T_LIBRARIES]},$pragma_lib;
+      print FILEO "$pragma_indent/* winemaker: Added -l$pragma_lib to the libraries */\n";
     } elsif (s/^(\s*)(\#\s*pragma\s+pack\s*\(\s*)//) {
       # Pragma pack handling
       #
@@ -2374,6 +2402,14 @@ sub generate_project_files($)
     print STDERR "       $!\n";
     return;
   }
+  binmode( FILEO, ':utf8' );
+
+  my $cpp_to_object;
+  if (@$project_settings[$T_FLAGS] & $TF_HASCXX) {
+    $cpp_to_object=".cxx=.o";
+  } else {
+    $cpp_to_object=".cpp=.o";
+  }
 
   print FILEO "### Generated by Winemaker $version\n";
   print FILEO "###\n";
@@ -2436,7 +2472,7 @@ sub generate_project_files($)
       generate_list("EXTRA_CXX_SRCS",1,@$project_settings[$T_SOURCES_CXX]);
       generate_list("EXTRA_RC_SRCS",1,@$project_settings[$T_SOURCES_RC]);
       print FILEO "\n";
-      generate_list("EXTRA_OBJS",1,["\$(EXTRA_C_SRCS:.c=.o)","\$(EXTRA_CXX_SRCS:.cpp=.o)"]);
+      generate_list("EXTRA_OBJS",1,["\$(EXTRA_C_SRCS:.c=.o)","\$(EXTRA_CXX_SRCS:$cpp_to_object)"]);
       print FILEO "\n\n\n";
     }
 
@@ -2457,7 +2493,7 @@ sub generate_project_files($)
       generate_list("${canon}_LIBRARY_PATH",1,@$target[$T_LIBRARY_PATH]);
       generate_list("${canon}_LIBRARIES",1,@$target[$T_LIBRARIES]);
       print FILEO "\n";
-      generate_list("${canon}_OBJS",1,["\$(${canon}_C_SRCS:.c=.o)","\$(${canon}_CXX_SRCS:.cpp=.o)","\$(${canon}_RC_SRCS:.rc=.res)"]);
+      generate_list("${canon}_OBJS",1,["\$(${canon}_C_SRCS:.c=.o)","\$(${canon}_CXX_SRCS:$cpp_to_object)","\$(${canon}_RC_SRCS:.rc=.res)"]);
       print FILEO "\n\n\n";
     }
     print FILEO "### Global source lists\n\n";
@@ -2515,7 +2551,7 @@ sub generate_project_files($)
   print FILEO "\n";
   print FILEO "# Implicit rules\n";
   print FILEO "\n";
-  print FILEO ".SUFFIXES: .cpp .rc .res\n";
+  print FILEO ".SUFFIXES: .cpp .cxx .rc .res\n";
   print FILEO "DEFINCL = \$(INCLUDE_PATH) \$(DEFINES) \$(OPTIONS)\n";
   print FILEO "\n";
   print FILEO ".c.o:\n";
@@ -2536,7 +2572,7 @@ sub generate_project_files($)
   print FILEO "                  \\\\\\#*\\\\\\# *~ *% .\\\\\\#*\n";
   print FILEO "\n";
   print FILEO "clean:: \$(SUBDIRS:%=%/__clean__) \$(EXTRASUBDIRS:%=%/__clean__)\n";
-  print FILEO "\t\$(RM) \$(CLEAN_FILES) \$(RC_SRCS:.rc=.res) \$(C_SRCS:.c=.o) \$(CXX_SRCS:.cpp=.o)\n";
+  print FILEO "\t\$(RM) \$(CLEAN_FILES) \$(RC_SRCS:.rc=.res) \$(C_SRCS:.c=.o) \$(CXX_SRCS:$cpp_to_object)\n";
   print FILEO "\t\$(RM) \$(DLLS:%=%.so) \$(LIBS) \$(EXES) \$(EXES:%=%.so)\n";
   print FILEO "\n";
   print FILEO "\$(SUBDIRS:%=%/__clean__): dummy\n";
@@ -2569,7 +2605,7 @@ sub generate_project_files($)
         } else {
           print FILEO "\t\$(CC)";
         }
-        print FILEO " \$(${canon}_LDFLAGS) -o \$\@ \$(${canon}_OBJS) \$(${canon}_LIBRARY_PATH) \$(DEFLIB) \$(${canon}_DLLS:%=-l%) \$(${canon}_LIBRARIES:%=-l%)\n";
+        print FILEO " \$(${canon}_LDFLAGS) -o \$\@ \$(${canon}_OBJS) \$(${canon}_LIBRARY_PATH) \$(${canon}_DLL_PATH) \$(DEFLIB) \$(${canon}_DLLS:%=-l%) \$(${canon}_LIBRARIES:%=-l%)\n";
       }
       print FILEO "\n\n";
     }
@@ -2633,9 +2669,9 @@ $opt_no_banner=0;
 sub print_banner()
 {
   print "Winemaker $version\n";
-  print "Copyright 2000-2004 Francois Gouget <fgouget\@codeweavers.com> for CodeWeavers\n";
+  print "Copyright 2000-2004 François Gouget <fgouget\@codeweavers.com> for CodeWeavers\n";
   print "Copyright 2004 Dimitrie O. Paun\n";
-  print "Copyright 2009-2011 André Hentschel\n";
+  print "Copyright 2009-2012 André Hentschel\n";
 }
 
 sub usage()
@@ -2656,6 +2692,8 @@ sub usage()
   print STDERR "\tPlease read the manual page before use.\n";
   exit (2);
 }
+
+binmode(STDOUT, ":utf8");
 
 target_init(\@global_settings);
 

@@ -97,24 +97,25 @@ EXPORTS
   WSAResetEvent@4=kernel32.ResetEvent @75
   WSASend@28 @76
   WSASendDisconnect@8 @77
-  WSASendTo@36 @78
-  WSASetEvent@4=kernel32.SetEvent @79
-  WSASetServiceA@12 @80
-  WSASetServiceW@12 @81
-  WSASocketA@24 @82
-  WSASocketW@24 @83
-  WSAStringToAddressA@20 @84
-  WSAStringToAddressW@20 @85
-  WSAWaitForMultipleEvents@20=kernel32.WaitForMultipleObjectsEx @86
-  WSCDeinstallProvider@8 @87
-  WSCEnableNSProvider@8 @88
-  WSCEnumProtocols@16 @89
-  WSCGetProviderPath@16 @90
-  WSCInstallNameSpace@20 @91
-  WSCInstallProvider@20 @92
-  WSCUnInstallNameSpace@4 @93
-  WSCWriteProviderOrder@8 @96
-  freeaddrinfo@4=WS_freeaddrinfo@4 @97
-  getaddrinfo@16=WS_getaddrinfo@16 @98
-  getnameinfo@28=WS_getnameinfo@28 @99
-  inet_ntop@16=WS_inet_ntop@16 @100
+  WSASendMsg@24 @78
+  WSASendTo@36 @79
+  WSASetEvent@4=kernel32.SetEvent @80
+  WSASetServiceA@12 @81
+  WSASetServiceW@12 @82
+  WSASocketA@24 @83
+  WSASocketW@24 @84
+  WSAStringToAddressA@20 @85
+  WSAStringToAddressW@20 @86
+  WSAWaitForMultipleEvents@20=kernel32.WaitForMultipleObjectsEx @87
+  WSCDeinstallProvider@8 @88
+  WSCEnableNSProvider@8 @89
+  WSCEnumProtocols@16 @90
+  WSCGetProviderPath@16 @91
+  WSCInstallNameSpace@20 @92
+  WSCInstallProvider@20 @93
+  WSCUnInstallNameSpace@4 @94
+  WSCWriteProviderOrder@8 @97
+  freeaddrinfo@4=WS_freeaddrinfo@4 @98
+  getaddrinfo@16=WS_getaddrinfo@16 @99
+  getnameinfo@28=WS_getnameinfo@28 @100
+  inet_ntop@16=WS_inet_ntop@16 @117

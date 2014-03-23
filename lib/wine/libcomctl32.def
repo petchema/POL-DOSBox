@@ -58,6 +58,7 @@ EXPORTS
   DPA_CreateEx@8 @340 NONAME
   SendNotify@16 @341 NONAME
   SendNotifyEx@20 @342 NONAME
+  TaskDialogIndirect@16 @345 NONAME
   StrChrA@8 @350 NONAME
   StrRChrA@12 @351 NONAME
   StrCmpNA@12 @352 NONAME
@@ -180,6 +181,5 @@ EXPORTS
   PropertySheet@4=PropertySheetA@4 @90
   PropertySheetA@4 @91
   PropertySheetW@4 @92
-  TaskDialogIndirect@16 @93
-  UninitializeFlatSB@4 @94
-  _TrackMouseEvent@4 @95
+  UninitializeFlatSB@4 @93
+  _TrackMouseEvent@4 @94

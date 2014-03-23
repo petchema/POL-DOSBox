@@ -10,6 +10,7 @@ EXPORTS
   DwmExtendFrameIntoClientArea@8 @125
   DwmFlush@0 @126
   DwmGetColorizationColor@8 @127
+  DwmGetCompositionTimingInfo@8 @128
   DwmGetGraphicsStreamClient@8 @129
   DwmGetGraphicsStreamTransformHint@8 @130
   DwmGetTransportAttributes@12 @131

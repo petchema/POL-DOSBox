@@ -107,6 +107,8 @@ EXPORTS
   SymSearch@44 @153
   SymSearchW@44 @154
   SymSetContext@12 @155
+  SymSetHomeDirectory@8 @156
+  SymSetHomeDirectoryW@8 @157
   SymSetOptions@4 @158
   SymSetParentWindow@4 @159
   SymSetScopeFromAddr@12 @160
