@@ -3,33 +3,29 @@
 ### DOSBOX Wrapper for PlayOnLinux and PlayOnMac
 # playonlinux_dos.cfg
 # manual_mount = true or false + all dosbox settings
-# auto_resolution = true or false
 
 # Directly get the working directory
 WORKING_DIRECTORY="$PWD"
 
 [ "$PLAYONLINUX" = "" ] && exit 0
 source "$PLAYONLINUX/lib/sources"
-if [ -e "$WINEPREFIX/playonlinux_dos.cfg" ]; then
-	source "$WINEPREFIX/playonlinux_dos.cfg"
-fi
 
 echo "Dosbox front-end for $APPLICATION_TITLE"
 echo "[$APPLICATION_TITLE] Working in $WINEPREFIX"
 
 rwinepath()
 {
-	# Stron minimum requirement for winepath
+	# Strong minimum requirement for winepath
 	"$winedir/wine.real" winepath "$@" 2> /dev/null
 }
 
 # Just in case
-if [ "$1" = "wineprefixcreate" -o "$1" = "wineboot" ]; then
-	mkdir -p "$WINEPREFIX/drive_c"
-	exit
-fi
 if [ "$WINEPREFIX" = "" ]; then
 	echo "WINEPREFIX var is not set"
+	exit
+fi
+if [ "$1" = "wineprefixcreate" -o "$1" = "wineboot" ]; then
+	mkdir -p "$WINEPREFIX/drive_c"
 	exit
 fi
 
@@ -100,6 +96,8 @@ if [ "$WINEDEBUG" = "-all" ]; then
 fi
 
 cd "$tmp_directory"
+
+# Hardcoded defaults
 sdl_fullscreen="true"
 sdl_fulldouble="false"
 if [ ! "$sdl_fullresolution" ]; then
@@ -181,7 +179,11 @@ dos_keyboardlayout="none"
 
 ipx_ipx="false"
 
-# Erase everything
+# Global overrides
+if [ -e "$POL_USER_ROOT/playonlinux_dos.cfg" ]; then
+	source "$POL_USER_ROOT/playonlinux_dos.cfg"
+fi
+# Prefix overrides
 if [ -e "$WINEPREFIX/playonlinux_dos.cfg" ]; then
 	source "$WINEPREFIX/playonlinux_dos.cfg"
 fi
