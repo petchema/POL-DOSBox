@@ -40,4 +40,4 @@ def shortize(fullpath):
 if __name__ == '__main__':
     name = sys.argv[1]
     result = shortize(name)
-    print result
+    print(result)
