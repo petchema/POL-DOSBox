@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ "$PLAYONLINUX" = "" ]
+then   
+        exit 0
+fi
+
+source "$PLAYONLINUX/lib/sources" 
+
+cp -a $SCRIPT_DIRECTORY/../wineversion/1.4 $REPERTOIRE/wine/linux-x86/1.4
+
+exit
