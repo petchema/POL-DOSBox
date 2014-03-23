@@ -125,6 +125,7 @@ render_aspect="false"
 render_scaler="normal2x"
 
 cpu_core="auto"
+cpu_cputype="auto"
 cpu_cycles="auto"
 cpu_cycleup="500"
 cpu_cycledown="20"
@@ -213,6 +214,7 @@ scaler=$render_scaler
 
 [cpu]
 core=$cpu_core
+cputype=$cpu_cputype
 cycles=$cpu_cycles
 cycleup=$cpu_cycleup
 cycledown=$cpu_cycledown
